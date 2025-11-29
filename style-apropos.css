@@ -1,0 +1,250 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100..900&family=Roboto:wght@100..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Déclaration des variables */
+:root {
+  --var--bg--color: #48B6AC;             /* Turquoise/vert */
+  --var--secondary--color: #F78DA7;      /* Rose vif */
+  --var--text--color: #FCEBD0;           /* Texte clair */
+  --var--text--color-dark: #1F1F1F;      /* Texte foncé */
+  --var--bg-light: #FFFFFF;              /* Blanc */
+  --var--bg-dark: #2C3E50;               /* Bleu nuit/gris foncé */
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #e0eee8;
+  color: var(--var--text--color-dark);
+  line-height: 1.6;
+}
+
+/* HEADER */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--var--bg--color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+header nav ul {
+  display: flex;
+  list-style: none;
+  gap: 4rem;
+}
+
+header nav ul li a {
+  text-decoration: none;
+  color: var(--var--text--color-dark);
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+header nav ul li a:hover {
+  color: var(--var--text--color);
+}
+
+header button {
+  background-color: var(--var--secondary--color);
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 500;
+}
+
+header button:hover {
+  background-color: var(--var--bg--color);
+  border: 2px solid var(--var--secondary--color);
+  color: var(--var--text--color);
+}
+
+/* MAIN CONTENT */
+main {
+  padding: 2rem;
+}
+
+/* HERO SECTION */
+#hero {
+  width: 90%;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--var--bg-dark) 15%, var(--var--bg--color) 100%);
+  color: var(--var--text--color-dark);
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#hero:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+#hero div img {
+  width: 120px;
+  height: auto;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+#hero div img:hover {
+  transform: scale(1.03);
+}
+
+
+
+/* ALBUM */
+#album {
+  width: 90%;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--var--bg-dark) 15%, var(--var--bg--color) 100%);
+  color: var(--var--text--color-dark);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+#album .gauche h2 {
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+#album .photo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 1rem 0;
+}
+
+/* CONTACT */
+#contact > h3 {
+  width: 90%;
+  margin: 2rem auto;
+  padding: 2rem;
+  font-size: 2rem;
+  text-align: center;
+  border-radius: 12px;
+  color: var(--var--text--color-dark);
+  background: linear-gradient(135deg, var(--var--bg-dark) 15%, var(--var--bg--color) 100%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+#contact > h3:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+
+
+form {
+  width: 90%;
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--var--bg-light);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--var--text--color-dark);
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 0.8rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--var--bg--color);
+  box-shadow: 0 0 0 3px rgba(72, 182, 172, 0.3);
+  outline: none;
+}
+
+form button[type="submit"] {
+  background-color: var(--var--secondary--color);
+  color: white;
+  border: none;
+  padding: 0.7rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 1rem;
+}
+
+form button[type="submit"]:hover {
+  background-color: var(--var--bg--color);
+  border: 2px solid var(--var--secondary--color);
+  color: var(--var--text--color-dark);
+}
+
+#reseaux {
+  display: flex;
+  justify-content: center;    /* centre horizontalement */
+  gap: 3rem;                  /* espace entre les icônes */
+  margin: 3rem 0;
+  background-color: var(--var--bg-light);  /* fond clair */
+  padding: 1.5rem 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+#reseaux .carte, #reseaux > div {
+  background-color: var(--var--bg--color); /* turquoise */
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s, transform 0.3s;
+  cursor: pointer;
+}
+
+#reseaux .carte:hover, #reseaux > div:hover {
+  background-color: var(--var--secondary--color);  /* rose vif */
+  transform: scale(1.1);
+}
+
+#reseaux i {
+  color: var(--var--text--color);
+  transition: color 0.3s;
+  pointer-events: none; /* évite d’interférer avec le clic */
+}
