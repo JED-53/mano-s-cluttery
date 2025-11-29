@@ -1,3 +1,37 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Récupération des données du formulaire
+    $nom = htmlspecialchars($_POST['nom']);
+    $email = htmlspecialchars($_POST['email']);
+    $date_naissance = htmlspecialchars($_POST['date_naissance']);
+    $date_location = htmlspecialchars($_POST['date_location']);
+    $message = htmlspecialchars($_POST['message']);
+    
+    // Email destinataire
+    $destinataire = "eejdimitri@gmail.com";
+    $sujet = "Nouvelle réservation de " . $nom;
+    
+    // Contenu du email
+    $contenu = "Nouvelle réservation reçue:\n\n";
+    $contenu .= "Nom: " . $nom . "\n";
+    $contenu .= "Email: " . $email . "\n";
+    $contenu .= "Date de naissance: " . $date_naissance . "\n";
+    $contenu .= "Date de location: " . $date_location . "\n";
+    $contenu .= "Message:\n" . $message . "\n";
+    
+    // En-têtes du email
+    $headers = "From: " . $email . "\r\n";
+    $headers .= "Reply-To: " . $email . "\r\n";
+    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+    
+    // Envoi du email
+    if (mail($destinataire, $sujet, $contenu, $headers)) {
+        $message_succes = "Votre réservation a été envoyée avec succès !";
+    } else {
+        $message_erreur = "Erreur lors de l'envoi. Veuillez réessayer.";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -5,7 +39,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>page du catalogue</title>
     <link rel="stylesheet" href="style-apropos.css">
-        <!-- Lien vers Font Awesome -->
+    <!-- Lien vers Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -15,7 +49,6 @@
         <ul>
             <li>
                <a href="ma_page.html">Acceuil</a> 
-    
             </li>
             <li>
                 <a href="#contact">contact</a>
@@ -55,8 +88,21 @@
         </section>
         <section id="contact">
             <h3>VEILLEZ REMPLIR LE FORMULAIRE SUIVANT POUR FAIRE UNE RESERVATION</h3>
-                    <!--formulaire-->
-            <form action="traiter_reservation.php" method="POST"> 
+            
+            <?php if (isset($message_succes)): ?>
+                <div style="color: green; font-weight: bold; margin-bottom: 20px;">
+                    <?php echo $message_succes; ?>
+                </div>
+            <?php endif; ?>
+            
+            <?php if (isset($message_erreur)): ?>
+                <div style="color: red; font-weight: bold; margin-bottom: 20px;">
+                    <?php echo $message_erreur; ?>
+                </div>
+            <?php endif; ?>
+            
+            <!--formulaire-->
+            <form method="POST"> 
                 <input type="text" name="nom" placeholder="Votre nom" required>  
                 <input type="email" name="email" placeholder="Votre adresse mail" required> 
                 <input type="date" name="date_naissance" placeholder="Votre date de naissance" required>
