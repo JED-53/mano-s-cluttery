@@ -1,35 +1,69 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Récupération des données du formulaire
-    $nom = htmlspecialchars($_POST['nom']);
-    $email = htmlspecialchars($_POST['email']);
-    $date_naissance = htmlspecialchars($_POST['date_naissance']);
-    $date_location = htmlspecialchars($_POST['date_location']);
-    $message = htmlspecialchars($_POST['message']);
-    
-    // Email destinataire
-    $destinataire = "eejdimitri@gmail.com";
-    $sujet = "Nouvelle réservation de " . $nom;
-    
-    // Contenu du email
-    $contenu = "Nouvelle réservation reçue:\n\n";
-    $contenu .= "Nom: " . $nom . "\n";
-    $contenu .= "Email: " . $email . "\n";
-    $contenu .= "Date de naissance: " . $date_naissance . "\n";
-    $contenu .= "Date de location: " . $date_location . "\n";
-    $contenu .= "Message:\n" . $message . "\n";
-    
-    // En-têtes du email
-    $headers = "From: " . $email . "\r\n";
-    $headers .= "Reply-To: " . $email . "\r\n";
-    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-    
-    // Envoi du email
-    if (mail($destinataire, $sujet, $contenu, $headers)) {
-        $message_succes = "Votre réservation a été envoyée avec succès !";
-    } else {
-        $message_erreur = "Erreur lors de l'envoi. Veuillez réessayer.";
+// --- DEBUG (remove in production) ---
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
+// Traiter seulement POST puis quitter (GET montrera le formulaire HTML plus bas)
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Récupération et nettoyage des champs
+    $nom = trim(filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_STRING));
+    $email = trim(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL));
+    $date_naissance = trim(filter_input(INPUT_POST, 'date_naissance', FILTER_SANITIZE_STRING));
+    $date_location = trim(filter_input(INPUT_POST, 'date_location', FILTER_SANITIZE_STRING));
+    $message = trim(filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING));
+
+    // Validation basique
+    $errors = [];
+    if ($nom === '') $errors[] = 'Nom requis.';
+    if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = 'Email invalide.';
+    if ($date_location === '') $errors[] = 'Date de location requise.';
+    if ($message === '') $errors[] = 'Message requis.';
+
+    if (!empty($errors)) {
+        // réponse JSON utile pour fetch/ajax ; pour formulaire HTML, on pourra rediriger
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode(['status' => 'error', 'errors' => $errors]);
+        exit;
     }
+
+    // Empêcher l'injection d'en-têtes
+    $cleanName = str_replace(["\r", "\n"], [' ', ' '], $nom);
+    $cleanEmail = str_replace(["\r", "\n"], '', $email);
+
+    // Préparer le mail
+    $to = 'eejdimitri@gmail.com'; // destinataire — adapte si besoin
+    $subject = "Nouvelle réservation de " . $cleanName;
+    $body = "Nouvelle réservation reçue :\n\n";
+    $body .= "Nom: " . $cleanName . "\n";
+    $body .= "Email: " . $cleanEmail . "\n";
+    $body .= "Date de naissance: " . $date_naissance . "\n";
+    $body .= "Date de location: " . $date_location . "\n\n";
+    $body .= "Message:\n" . $message . "\n";
+
+    // En-têtes (From = adresse du site / Reply-To = client)
+    $fromAddress = 'no-reply@ton-domaine.example'; // change selon ton domaine / configuration
+    $headers = "From: Mano's Cluttery <{$fromAddress}>\r\n";
+    $headers .= "Reply-To: {$cleanEmail}\r\n";
+    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+
+    // Envoi
+    $sent = mail($to, $subject, $body, $headers);
+
+    if ($sent) {
+        // Si le formulaire vient d'un submit classique, rediriger avec paramètre de succès
+        if (empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
+            header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? '/') . '?success=1');
+            exit;
+        }
+
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode(['status' => 'success', 'message' => 'Réservation envoyée avec succès.']);
+    } else {
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode(['status' => 'error', 'message' => 'Erreur lors de l\'envoi du mail.']);
+    }
+    exit;
 }
 ?>
 <!DOCTYPE html>
