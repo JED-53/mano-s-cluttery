@@ -29,7 +29,7 @@
                 <p id="pb1">Bienvenue chez <strong>mano's Cluttery</strong>, chaque détail compte. C'est pourquoi nous vous proposons une sélection raffinée de couverts pensés pour sublimer vos tables et s'adapter à tous les styles d'événements du plus intime au plus prestigieux.Parcourez notre collection de fourchettes, couteaux, cuillères et accessoires de table soigneusement choisis pour leur esthétique, leur qualité et leur polyvalence. Que vous recherchiez une ambiance chic, moderne, rustique ou classique, vous trouverez ici les éléments parfaits pour compléter votre décor.</p>
                  </div>
             <div>
-            <img  src="/images/2.png" width="120px"/>
+            <img  src="./../images/2.png" width="120px"/>
             <img  src="./../images/3.png" width="120px"/>
             <img  src="./../images/4.png" width="120px"/>
             <img  src="./../images/5.png" width="120px"/>
@@ -54,17 +54,54 @@
         </section>
         <section id="contact">
             <h3>VEILLEZ REMPLIR LE FORMULAIRE SUIVANT POUR FAIRE UNE RESERVATION</h3>
-                    <!--formulaire-->
-            <form action="traiter_reservation.php" method="POST" class="form-group"> 
-                <input type="text" name="nom" placeholder="Votre nom" required>  
-                <input type="email" name="email" placeholder="Votre adresse mail" required> 
-                <input type="date" name="date_naissance" placeholder="Votre date de naissance" required>
-                <input type="date" name="date_location" placeholder="Votre date de location" required>
-                <textarea name="message" placeholder="Veillez remplir les informations nécessaires" required></textarea>     
+            <!--formulaire-->
+            <form id="reservationForm" class="form-group"> 
+                <input id="nom" type="text" name="nom" placeholder="Votre nom" required>  
+                <input id="email" type="email" name="email" placeholder="Votre adresse mail" required> 
+                <label for="date_naissance">Date de naissance :</label>
+                <input id="date_naissance" type="date" name="date_naissance" placeholder="Votre date de naissance" required>
+                <label for="date_location">Date de location :</label>
+                <input id="date_location" type="date" name="date_location" placeholder="Votre date de location" required>
+                <textarea id="message" name="message" placeholder="Veillez remplir les informations nécessaires" required></textarea>     
                 <button type="submit">Valider</button>  
             </form>
 
             <h3>NOUS VOUS REMERCIONS</h3>
+
+            <script>
+            (function () {
+                const phone = '23754404526'; // sans '+'
+                const form = document.getElementById('reservationForm');
+                if (!form) return;
+
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    const nom = document.getElementById('nom')?.value.trim() || '';
+                    const email = document.getElementById('email')?.value.trim() || '';
+                    const dateNaissance = document.getElementById('date_naissance')?.value || '';
+                    const dateLocation = document.getElementById('date_location')?.value || '';
+                    const message = document.getElementById('message')?.value.trim() || '';
+
+                    const lines = [
+                        "📩 Nouvelle réservation — Mano's Cluttery",
+                        `Nom: ${nom}`,
+                        `Email: ${email}`,
+                        `Date de naissance: ${dateNaissance}`,
+                        `Date de location: ${dateLocation}`,
+                        `Message: ${message}`
+                    ];
+
+                    const waUrl = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(lines.join('\\n'));
+
+                    // ouvre WhatsApp (web / application) dans nouvel onglet
+                    window.open(waUrl, '_blank');
+
+                    // reset simple du formulaire
+                    form.reset();
+                }, false);
+            })();
+            </script>
         </section>
         
         <section id="reseaux">
