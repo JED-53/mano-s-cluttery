@@ -1,138 +1,154 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Récupération des données du formulaire
-    $nom = htmlspecialchars($_POST['nom']);
-    $email = htmlspecialchars($_POST['email']);
-    $date_naissance = htmlspecialchars($_POST['date_naissance']);
-    $date_location = htmlspecialchars($_POST['date_location']);
-    $message = htmlspecialchars($_POST['message']);
-    
-    // Email destinataire
-    $destinataire = "eejdimitri@gmail.com";
-    $sujet = "Nouvelle réservation de " . $nom;
-    
-    // Contenu du email
-    $contenu = "Nouvelle réservation reçue:\n\n";
-    $contenu .= "Nom: " . $nom . "\n";
-    $contenu .= "Email: " . $email . "\n";
-    $contenu .= "Date de naissance: " . $date_naissance . "\n";
-    $contenu .= "Date de location: " . $date_location . "\n";
-    $contenu .= "Message:\n" . $message . "\n";
-    
-    // En-têtes du email
-    $headers = "From: " . $email . "\r\n";
-    $headers .= "Reply-To: " . $email . "\r\n";
-    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-    
-    // Envoi du email
-    if (mail($destinataire, $sujet, $contenu, $headers)) {
-        $message_succes = "Votre réservation a été envoyée avec succès !";
-    } else {
-        $message_erreur = "Erreur lors de l'envoi. Veuillez réessayer.";
+/**
+ * traiter_reservation.php — Mano's Clutlery
+ * Traitement sécurisé des réservations
+ */
+
+// 1. DÉMARRAGE SESSION SÉCURISÉE
+session_start([
+    'cookie_httponly' => true,
+    'cookie_secure'   => true,   // HTTPS uniquement en production
+    'cookie_samesite' => 'Strict',
+    'use_strict_mode' => true,
+]);
+
+// 2. HEADERS DE SÉCURITÉ
+header('Content-Security-Policy: default-src \'self\'');
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: DENY');
+header('X-XSS-Protection: 1; mode=block');
+header('Referrer-Policy: strict-origin-when-cross-origin');
+
+// 3. VÉRIFICATION MÉTHODE HTTP
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    header('Location: apropos.html?error=method');
+    exit;
+}
+
+// 4. PROTECTION CSRF
+if (empty($_POST['csrf_token']) || empty($_SESSION['csrf_token'])
+    || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+    http_response_code(403);
+    die('Requête invalide. Token CSRF manquant ou incorrect.');
+}
+// Régénérer le token après usage
+unset($_SESSION['csrf_token']);
+
+// 5. RATE LIMITING (max 5 soumissions / 10 min par IP)
+$ip  = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+$key = 'reservation_' . md5($ip);
+if (!isset($_SESSION[$key])) {
+    $_SESSION[$key] = ['count' => 0, 'first' => time()];
+}
+if (time() - $_SESSION[$key]['first'] > 600) {
+    $_SESSION[$key] = ['count' => 0, 'first' => time()];
+}
+if ($_SESSION[$key]['count'] >= 5) {
+    http_response_code(429);
+    die('Trop de soumissions. Veuillez réessayer dans 10 minutes.');
+}
+$_SESSION[$key]['count']++;
+
+// 6. COLLECTE & ASSAINISSEMENT DES DONNÉES
+$nom          = trim(strip_tags($_POST['nom']          ?? ''));
+$email        = trim(strip_tags($_POST['email']        ?? ''));
+$date_location = trim(strip_tags($_POST['date_location'] ?? ''));
+$type_event   = trim(strip_tags($_POST['type_event']   ?? ''));
+$message      = trim(strip_tags($_POST['message']      ?? ''));
+
+// 7. VALIDATION SERVEUR
+$errors = [];
+
+// Nom
+if (empty($nom) || mb_strlen($nom) < 2 || mb_strlen($nom) > 100) {
+    $errors[] = 'Nom invalide (2–100 caractères requis).';
+}
+if (!preg_match('/^[\p{L}\s\-\'\.]+$/u', $nom)) {
+    $errors[] = 'Le nom contient des caractères non autorisés.';
+}
+
+// Email
+if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL) || mb_strlen($email) > 150) {
+    $errors[] = 'Adresse e-mail invalide.';
+}
+
+// Date de location — doit être future
+if (empty($date_location)) {
+    $errors[] = 'La date de location est requise.';
+} else {
+    $d = DateTime::createFromFormat('Y-m-d', $date_location);
+    if (!$d || $d->format('Y-m-d') !== $date_location) {
+        $errors[] = 'Format de date invalide.';
+    } elseif ($d < new DateTime('today')) {
+        $errors[] = 'La date de location doit être dans le futur.';
     }
 }
+
+// Type événement (optionnel mais whitelist)
+$types_autorises = ['', 'mariage', 'anniversaire', 'reception', 'diner', 'autre'];
+if (!in_array($type_event, $types_autorises, true)) {
+    $type_event = '';
+}
+
+// Message
+if (empty($message) || mb_strlen($message) < 20 || mb_strlen($message) > 1000) {
+    $errors[] = 'Le message doit contenir entre 20 et 1000 caractères.';
+}
+
+// 8. DÉTECTION SPAM (honeypot — champ invisible à ne pas remplir)
+if (!empty($_POST['website'])) {
+    // Bot détecté — on simule le succès sans envoyer
+    header('Location: apropos.html?success=1');
+    exit;
+}
+
+// 9. TRAITEMENT ERREURS
+if (!empty($errors)) {
+    $err_param = urlencode(implode('|', $errors));
+    header('Location: apropos.html?error=' . $err_param);
+    exit;
+}
+
+// 10. PRÉPARATION EMAIL
+$destinataire = 'eejdimitri@gmail.com';
+$sujet        = '[Mano\'s Clutlery] Réservation de ' . htmlspecialchars($nom, ENT_QUOTES, 'UTF-8');
+
+$type_label = match($type_event) {
+    'mariage'     => 'Mariage',
+    'anniversaire'=> 'Anniversaire',
+    'reception'   => 'Réception d\'entreprise',
+    'diner'       => 'Dîner privé',
+    'autre'       => 'Autre',
+    default       => 'Non précisé',
+};
+
+$contenu  = "=== NOUVELLE RÉSERVATION — Mano's Clutlery ===\n\n";
+$contenu .= "Date de réception : " . date('d/m/Y à H:i') . "\n";
+$contenu .= "IP expéditeur     : " . $ip . "\n\n";
+$contenu .= "--- Coordonnées ---\n";
+$contenu .= "Nom       : " . $nom . "\n";
+$contenu .= "Email     : " . $email . "\n\n";
+$contenu .= "--- Détails ---\n";
+$contenu .= "Date souhaitée : " . date('d/m/Y', strtotime($date_location)) . "\n";
+$contenu .= "Type événement : " . $type_label . "\n\n";
+$contenu .= "--- Message ---\n" . $message . "\n";
+
+$headers  = "From: noreply@manos-clutlery.com\r\n";
+$headers .= "Reply-To: " . $email . "\r\n";
+$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+$headers .= "X-Mailer: Manos-Clutlery-Mailer/1.0\r\n";
+
+// 11. ENVOI (avec log en cas d'échec)
+$envoye = mail($destinataire, $sujet, $contenu, $headers);
+
+if (!$envoye) {
+    error_log('[Mano Clutlery] Échec envoi mail pour ' . $email . ' — ' . date('c'));
+    header('Location: apropos.html?error=mail');
+    exit;
+}
+
+// 12. REDIRECTION SUCCÈS
+header('Location: apropos.html?success=1');
+exit;
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>page du catalogue</title>
-    <link rel="stylesheet" href="style-apropos.css">
-    <!-- Lien vers Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-   <header>
-    <h1>MANO'S CLUTERY</h1>
-    <nav>
-        <ul>
-            <li>
-               <a href="ma_page.html">Acceuil</a> 
-            </li>
-            <li>
-                <a href="#contact">contact</a>
-            </li>
-        </ul>
-    </nav>
-    <button>apprendre plus</button>
-   </header>
-    <main>
-        <section id="hero">
-           <h3>MERCI POUR VOTRE CONFIANCE</h3> 
-                <p id="pb1">Bienvenue chez <strong>mano's Cluttery</strong>, chaque détail compte. C'est pourquoi nous vous proposons une sélection raffinée de couverts pensés pour sublimer vos tables et s'adapter à tous les styles d'événements du plus intime au plus prestigieux.Parcourez notre collection de fourchettes, couteaux, cuillères et accessoires de table soigneusement choisis pour leur esthétique, leur qualité et leur polyvalence. Que vous recherchiez une ambiance chic, moderne, rustique ou classique, vous trouverez ici les éléments parfaits pour compléter votre décor.</p>
-                 </div>
-            <div>
-            <img  src="2.png" width="120px"/>
-            <img  src="3.png" width="120px"/>
-            <img  src="4.png" width="120px"/>
-            <img  src="5.png" width="120px"/>
-            <img  src="2.png" width="120px"/>
-            </div>
-        </section>
-        <section id="album">  
-             <div class="gauche">
-                <div>                    
-                    <!-- Icône de couverts -->
-                     <h2>catalogue <i class="fas fa-utensils fa-sm"></i></h2>                    
-                </div>
-            </div>
-            <div class="photo">
-            <img id="i1" src="picture/2.png" width="120px"/>
-            <img  id="i2" src="picture/Logo maman.png" width="120px"/>
-            <img  id="i3" src="picture/4.png" width="120px"/>
-            <img   id="i4" src="picture/3.png" width="120px"/>
-            <img  id="i5" src="picture/2.png" width="120px"/>
-            <img   id="i6" src="picture/Logo maman.png" width="120px"/>
-            </div>
-        </section>
-        <section id="contact">
-            <h3>VEILLEZ REMPLIR LE FORMULAIRE SUIVANT POUR FAIRE UNE RESERVATION</h3>
-            
-            <?php if (isset($message_succes)): ?>
-                <div style="color: green; font-weight: bold; margin-bottom: 20px;">
-                    <?php echo $message_succes; ?>
-                </div>
-            <?php endif; ?>
-            
-            <?php if (isset($message_erreur)): ?>
-                <div style="color: red; font-weight: bold; margin-bottom: 20px;">
-                    <?php echo $message_erreur; ?>
-                </div>
-            <?php endif; ?>
-            
-            <!--formulaire-->
-            <form method="POST"> 
-                <input type="text" name="nom" placeholder="Votre nom" required>  
-                <input type="email" name="email" placeholder="Votre adresse mail" required> 
-                <input type="date" name="date_naissance" placeholder="Votre date de naissance" required>
-                <input type="date" name="date_location" placeholder="Votre date de location" required>
-                <textarea name="message" placeholder="Veillez remplir les informations nécessaires" required></textarea>     
-                <button type="submit">Valider</button>  
-            </form>
-
-            <h3>NOUS VOUS REMERCIONS</h3>
-        </section>
-        
-        <section id="reseaux">
-        <div>
-                       <a href="https://www.facebook.com/" target="_blank">
-            <i class="fab fa-facebook fa-2x"></i>
-            </a> 
-        </div>
-        <div class="carte">
-            <a href="https://www.instagram.com/" target="_blank">
-            <i class="fab fa-instagram fa-2x"></i>
-            </a>
-        </div>
-        <div>
-            <a href="https://www.youtube.com/" target="_blank">
-            <i class="fab fa-youtube fa-2x"></i>
-            </a>
-        </div>
-        </section>
-
-        <footer>JED53 tout droits réservés 2025</footer>
-   </main> 
-</body>
-</html>

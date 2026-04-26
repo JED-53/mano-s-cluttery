@@ -1,93 +1,221 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mano's Clutlery — Location de couverts haut de gamme pour vos événements. Mariages, réceptions, dîners privés.">
+  <title>Mano's Clutlery — Location de Couverts</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style-index.css">
+</head>
+<body>
 
-  <head>
-    <link rel="stylesheet" href="style-ma_page.css">
-    <title>MANO’S CLUTTERY</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  </head>
-
- <body>
-
-    <header>
-        <h1 id="premier"> BIENVENUE CHEZ MANO’S CLUTTERY </h1>
-         <nav>
+  <!-- HEADER -->
+  <header id="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-mc">MC</span>
+        <div class="logo-text">
+          <span class="logo-main">Mano's Clutlery</span>
+          <span class="logo-sub">Location de Couverts</span>
+        </div>
+      </div>
+      <nav>
         <ul>
-            <li>
-                      <!--lien externes-->
-                <a href="https://www.youtube.com/watch?v=nf2XHSpI4WA">vidéo de quelques evennements</a>
-            </li> 
-            <li>
-                <a href="apropos.html#contact">contacter-nous</a>
-            </li>
+          <li><a href="index.html" class="active">Accueil</a></li>
+          <li><a href="apropos.html">Catalogue</a></li>
+          <li><a href="apropos.html#contact">Réservation</a></li>
+          <li><a href="login.html" class="nav-btn"><i class="fas fa-user"></i> Connexion</a></li>
         </ul>
-    </nav>  
-    </header>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
 
-         <div>
-        <img src="3.png" width="120px"/>
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Location de couverts haut de gamme</p>
+      <h1>Sublimez chaque table,<br><em>enchantez chaque invité</em></h1>
+      <p class="hero-desc">Mariages, réceptions, dîners privés — nous habillons vos tables avec élégance.</p>
+      <div class="hero-cta">
+        <a href="apropos.html" class="btn-primary">Découvrir le catalogue</a>
+        <a href="apropos.html#contact" class="btn-secondary">Faire une réservation</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>Défiler</span>
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section id="stats">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <span class="stat-number">500+</span>
+        <span class="stat-label">Pièces disponibles</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number">150+</span>
+        <span class="stat-label">Événements réalisés</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number">100%</span>
+        <span class="stat-label">Satisfaction client</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-number">3</span>
+        <span class="stat-label">Collections exclusives</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-inner">
+      <div class="section-header">
+        <p class="section-eyebrow">Nos engagements</p>
+        <h2>Une expérience irréprochable,<br>du début à la fin</h2>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-star"></i></div>
+          <h3>Qualité & Propreté</h3>
+          <p>Chaque couvert est soigneusement nettoyé, désinfecté et contrôlé avant chaque location. Zéro compromis sur l'hygiène.</p>
         </div>
-
-    <section id="service">
-           <h2>Sublimez vos tables, simplifiez votre organisation</h2>
-    <p id="pa1">Chez <strong>Mano’s Cluttery</strong>, nous croyons que chaque événement mérite une table à la hauteur de vos attentes. Spécialisés dans la location de couverts haut de gamme, nous vous proposons un large choix de pièces élégantes, pratiques et parfaitement entretenues, pour tous vos événements : mariages, anniversaires, réceptions d’entreprise, dîners privés, ou fêtes à thème.</p>
-    <h2>Notre engagement </h2>
-    <ul>
-        <li>
-            <div class="service-list">
-                <strong>qualité & Propreté :</strong> Tous nos couverts sont soigneusement nettoyés, désinfectés et contrôlés avant chaque location.
-            </div>
-        </li>
-        <li>
-            <div class="service-list1">
-                <strong>Style & Varité :</strong> Que vous recherchiez un style classique, moderne ou raffiné, nous avons ce qu’il vous faut.
-            </div>  
-        </li>
-        <li>
-            <div class="service-list2"> 
-            <strong>Service personnalisé :</strong> Nous vous accompagnons dans le choix des éléments adaptés à votre ambiance et à votre budget.
-            </div>
-        </li>
-        <li>
-                    <div class="service-list3"> 
-            <strong>Simplicité & Flexibilité :</strong> Réservez facilement en ligne ou contactez-nous pour un devis sur mesure. Livraison et reprise disponibles selon vos besoins.
-        </div>     
-        </li>
-    </ul>
-    <!--voici un commentaire-->
-    <h2> Pourquoi louer chez nous ?</h2>
-    <p id="pa2"> Organiser un événement, c’est déjà beaucoup de logistique. Avec <strong>Mano’s Cluttery</strong> , vous gagnez du temps, vous évitez les tracas et vous assurez à vos invités une table impeccable, jusque dans les moindres détails.</p>
-    <h3>Prêt à dresser la table de vos rêves ?</h3> 
-    <p id="pa3">Découvrez notre catalogue ou demandez un devis personnalisé dès aujourd’hui !</p> 
-    <ul>
-           <li>
-        <button><a href="apropos.html">visiter le catalogue</a></button>
-    </li>    
-                     <!--les medias en html-->  
-    </ul>
-    </section>
-
-     <section>
-
-        </section>
-        <section id="reseaux">
-                    <div class="carte">
-            <a href="https://www.facebook.com/" target="_blank">
-            <i class="fab fa-facebook fa-2x"></i>
-            </a>
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-palette"></i></div>
+          <h3>Style & Variété</h3>
+          <p>Classique, moderne ou raffiné — nos collections s'adaptent à toutes les ambiances et tous les codes de décoration.</p>
         </div>
-        <div class="carte">
-            <a href="https://www.instagram.com/" target="_blank">
-            <i class="fab fa-instagram fa-2x"></i>
-            </a>
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-headset"></i></div>
+          <h3>Service personnalisé</h3>
+          <p>Notre équipe vous accompagne dans le choix des pièces adaptées à votre événement, votre ambiance et votre budget.</p>
         </div>
-        <div class="carte">
-            <a href="https://www.youtube.com/" target="_blank">
-            <i class="fab fa-youtube fa-2x"></i>
-            </a>
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-truck"></i></div>
+          <h3>Livraison & Flexibilité</h3>
+          <p>Réservez en ligne ou demandez un devis sur mesure. Livraison et reprise disponibles selon vos besoins.</p>
         </div>
-        </section>
+      </div>
+    </div>
+  </section>
 
-        <footer>JED53 tout droits réservés 2025</footer>
-  </body>
+  <!-- WHY US -->
+  <section id="why">
+    <div class="why-inner">
+      <div class="why-text">
+        <p class="section-eyebrow">Pourquoi nous choisir ?</p>
+        <h2>La table de vos rêves, sans les tracas</h2>
+        <p>Organiser un événement, c'est déjà beaucoup de logistique. Avec Mano's Clutlery, vous gagnez du temps et offrez à vos invités une table impeccable, jusque dans les moindres détails.</p>
+        <ul class="why-list">
+          <li><i class="fas fa-check"></i> Pièces premium sélectionnées avec soin</li>
+          <li><i class="fas fa-check"></i> Tarifs transparents, sans surprise</li>
+          <li><i class="fas fa-check"></i> Disponible pour tous types d'événements</li>
+          <li><i class="fas fa-check"></i> Basé au Cameroun, livraison rapide</li>
+        </ul>
+        <a href="apropos.html" class="btn-primary">Voir notre catalogue</a>
+      </div>
+      <div class="why-visual">
+        <div class="why-badge">
+          <i class="fas fa-utensils"></i>
+          <span>Haut de gamme</span>
+        </div>
+        <div class="why-card card-1">
+          <i class="fas fa-heart"></i>
+          <div>
+            <strong>Mariage</strong>
+            <p>Tables sublimées</p>
+          </div>
+        </div>
+        <div class="why-card card-2">
+          <i class="fas fa-glass-cheers"></i>
+          <div>
+            <strong>Réception</strong>
+            <p>Élégance garantie</p>
+          </div>
+        </div>
+        <div class="why-card card-3">
+          <i class="fas fa-birthday-cake"></i>
+          <div>
+            <strong>Anniversaire</strong>
+            <p>Moments inoubliables</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section id="cta-band">
+    <div class="cta-inner">
+      <h2>Prêt à dresser la table de vos rêves ?</h2>
+      <p>Contactez-nous dès aujourd'hui pour une réservation ou un devis personnalisé.</p>
+      <a href="apropos.html#contact" class="btn-light">Réserver maintenant</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo">
+          <span class="logo-mc">MC</span>
+          <div class="logo-text">
+            <span class="logo-main">Mano's Clutlery</span>
+            <span class="logo-sub">Location de Couverts</span>
+          </div>
+        </div>
+        <p>Des couverts d'exception pour des moments mémorables.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="apropos.html">Catalogue</a></li>
+          <li><a href="apropos.html#contact">Réservation</a></li>
+          <li><a href="login.html">Connexion</a></li>
+        </ul>
+      </div>
+      <div class="footer-social">
+        <h4>Nous suivre</h4>
+        <div class="social-icons">
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p class="footer-contact"><i class="fas fa-envelope"></i> eejdimitri@gmail.com</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Mano's Clutlery — Tous droits réservés</p>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky header shadow
+    window.addEventListener('scroll', () => {
+      document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
+    });
+    // Mobile menu
+    document.getElementById('hamburger').addEventListener('click', function() {
+      document.querySelector('nav').classList.toggle('open');
+      this.classList.toggle('active');
+    });
+    // Animate on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.service-card, .stat-item, .why-card, .why-text').forEach(el => observer.observe(el));
+  </script>
+</body>
 </html>

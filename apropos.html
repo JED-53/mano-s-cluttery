@@ -1,92 +1,369 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>page du catalogue</title>
-    <link rel="stylesheet" href="style-apropos.css">
-        <!-- Lien vers Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Catalogue Mano's Clutlery — Découvrez notre sélection de couverts haut de gamme et réservez en ligne.">
+  <title>Catalogue & Réservation — Mano's Clutlery</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style-apropos.css">
 </head>
 <body>
-   <header>
-    <h1>MANO'S CLUTERY</h1>
-    <nav>
+
+  <!-- HEADER -->
+  <header id="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-mc">MC</span>
+        <div class="logo-text">
+          <span class="logo-main">Mano's Clutlery</span>
+          <span class="logo-sub">Location de Couverts</span>
+        </div>
+      </a>
+      <nav>
         <ul>
-            <li>
-               <a href="index.html">Acceuil</a> 
-    
-            </li>
-            <li>
-                <a href="#contact">contact</a>
-            </li>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="apropos.html" class="active">Catalogue</a></li>
+          <li><a href="#contact">Réservation</a></li>
+          <li><a href="login.html" class="nav-btn"><i class="fas fa-user"></i> Connexion</a></li>
         </ul>
-    </nav>
-    <button>apprendre plus</button>
-   </header>
-    <main>
-        <section id="hero">
-           <h3>MERCI POUR VOTRE CONFIANCE</h3> 
-                <p id="pb1">Bienvenue chez <strong>mano's Cluttery</strong>, chaque détail compte. C'est pourquoi nous vous proposons une sélection raffinée de couverts pensés pour sublimer vos tables et s'adapter à tous les styles d'événements du plus intime au plus prestigieux.Parcourez notre collection de fourchettes, couteaux, cuillères et accessoires de table soigneusement choisis pour leur esthétique, leur qualité et leur polyvalence. Que vous recherchiez une ambiance chic, moderne, rustique ou classique, vous trouverez ici les éléments parfaits pour compléter votre décor.</p>
-                 </div>
-            <div>
-            <img  src="2.png" width="120px"/>
-            <img  src="3.png" width="120px"/>
-            <img  src="4.png" width="120px"/>
-            <img  src="5.png" width="120px"/>
-            <img  src="2.png" width="120px"/>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- PAGE HERO -->
+  <section id="page-hero">
+    <div class="page-hero-content">
+      <p class="section-eyebrow">Notre sélection</p>
+      <h1>Catalogue & Réservation</h1>
+      <p>Découvrez nos collections et réservez directement en ligne.</p>
+    </div>
+  </section>
+
+  <main>
+
+    <!-- INTRO -->
+    <section id="intro">
+      <div class="section-inner">
+        <div class="intro-grid">
+          <div class="intro-text">
+            <p class="section-eyebrow">Pourquoi Mano's Clutlery</p>
+            <h2>Chaque détail compte</h2>
+            <p>Chez <strong>Mano's Clutlery</strong>, nous vous proposons une sélection raffinée de couverts pensés pour sublimer vos tables et s'adapter à tous vos événements — du plus intime au plus prestigieux.</p>
+            <p>Fourchettes, couteaux, cuillères, accessoires de table... chaque pièce est soigneusement choisie pour son esthétique, sa qualité et sa polyvalence.</p>
+          </div>
+          <div class="intro-badges">
+            <div class="badge-item">
+              <i class="fas fa-shield-alt"></i>
+              <div><strong>Hygiène garantie</strong><span>Désinfection complète avant chaque location</span></div>
             </div>
-        </section>
-        <section id="album">  
-             <div class="gauche">
-                <div>                    
-                    <!-- Icône de couverts -->
-                     <h2>catalogue <i class="fas fa-utensils fa-sm"></i></h2>                    
+            <div class="badge-item">
+              <i class="fas fa-gem"></i>
+              <div><strong>Qualité premium</strong><span>Pièces sélectionnées avec rigueur</span></div>
+            </div>
+            <div class="badge-item">
+              <i class="fas fa-clock"></i>
+              <div><strong>Disponibilité</strong><span>Réservation rapide en ligne</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CATALOGUE -->
+    <section id="album">
+      <div class="section-inner">
+        <div class="section-header">
+          <p class="section-eyebrow">Notre collection</p>
+          <h2>Catalogue <i class="fas fa-utensils" style="font-size:1.4rem; color:var(--teal);"></i></h2>
+          <p>Parcourez nos pièces disponibles à la location pour votre prochain événement.</p>
+        </div>
+
+        <!-- Filter tabs -->
+        <div class="filter-tabs">
+          <button class="filter-btn active" data-filter="all">Tout voir</button>
+          <button class="filter-btn" data-filter="classic">Classique</button>
+          <button class="filter-btn" data-filter="modern">Moderne</button>
+          <button class="filter-btn" data-filter="luxe">Luxe</button>
+        </div>
+
+        <div class="catalog-grid">
+          <!-- Cards — images réelles du projet -->
+          <div class="catalog-card" data-cat="classic">
+            <div class="catalog-img">
+              <img src="2.png" alt="Couverts collection classique" loading="lazy"/>
+              <span class="catalog-tag">Classique</span>
+            </div>
+            <div class="catalog-info">
+              <h3>Collection Ivoire</h3>
+              <p>Ensemble élégant pour dîners raffinés et mariages traditionnels.</p>
+              <a href="#contact" class="catalog-cta">Réserver</a>
+            </div>
+          </div>
+          <div class="catalog-card" data-cat="modern">
+            <div class="catalog-img">
+              <img src="3.png" alt="Couverts collection moderne" loading="lazy"/>
+              <span class="catalog-tag">Moderne</span>
+            </div>
+            <div class="catalog-info">
+              <h3>Collection Épure</h3>
+              <p>Lignes épurées et minimalistes pour des événements contemporains.</p>
+              <a href="#contact" class="catalog-cta">Réserver</a>
+            </div>
+          </div>
+          <div class="catalog-card" data-cat="luxe">
+            <div class="catalog-img">
+              <img src="4.png" alt="Couverts collection luxe" loading="lazy"/>
+              <span class="catalog-tag">Luxe</span>
+            </div>
+            <div class="catalog-info">
+              <h3>Collection Or Blanc</h3>
+              <p>Dorure et finitions premium pour vos réceptions les plus prestigieuses.</p>
+              <a href="#contact" class="catalog-cta">Réserver</a>
+            </div>
+          </div>
+          <div class="catalog-card" data-cat="classic">
+            <div class="catalog-img">
+              <img src="5.png" alt="Couverts collection rustique" loading="lazy"/>
+              <span class="catalog-tag">Classique</span>
+            </div>
+            <div class="catalog-info">
+              <h3>Collection Rustique</h3>
+              <p>Authenticité et caractère pour des événements champêtres et intimes.</p>
+              <a href="#contact" class="catalog-cta">Réserver</a>
+            </div>
+          </div>
+          <div class="catalog-card" data-cat="modern">
+            <div class="catalog-img">
+              <img src="2.png" alt="Couverts acier brossé" loading="lazy"/>
+              <span class="catalog-tag">Moderne</span>
+            </div>
+            <div class="catalog-info">
+              <h3>Collection Acier Brossé</h3>
+              <p>Finition mate sophistiquée, idéale pour les événements d'entreprise.</p>
+              <a href="#contact" class="catalog-cta">Réserver</a>
+            </div>
+          </div>
+          <div class="catalog-card" data-cat="luxe">
+            <div class="catalog-img">
+              <img src="3.png" alt="Couverts collection prestige" loading="lazy"/>
+              <span class="catalog-tag">Luxe</span>
+            </div>
+            <div class="catalog-info">
+              <h3>Collection Prestige</h3>
+              <p>Le summum de l'élégance pour vos galas et soirées de gala.</p>
+              <a href="#contact" class="catalog-cta">Réserver</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT / RÉSERVATION -->
+    <section id="contact">
+      <div class="section-inner">
+        <div class="contact-grid">
+          <div class="contact-info">
+            <p class="section-eyebrow">Nous contacter</p>
+            <h2>Faites votre réservation</h2>
+            <p>Remplissez le formulaire et notre équipe vous contacte sous 24h pour confirmer votre réservation et finaliser les détails.</p>
+            <ul class="contact-details">
+              <li><i class="fas fa-envelope"></i> eejdimitri@gmail.com</li>
+              <li><i class="fab fa-instagram"></i> @manos.clutlery</li>
+              <li><i class="fab fa-facebook"></i> Mano's Clutlery</li>
+            </ul>
+            <div class="contact-promise">
+              <i class="fas fa-check-circle"></i>
+              <p>Réponse garantie sous 24 heures ouvrables</p>
+            </div>
+          </div>
+
+          <div class="form-wrap">
+            <form action="traiter_reservation.php" method="POST" id="reservation-form" novalidate>
+              <!-- Protection CSRF -->
+              <input type="hidden" name="csrf_token" value="<?php echo isset($_SESSION['csrf_token']) ? htmlspecialchars($_SESSION['csrf_token']) : ''; ?>">
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="nom">Nom complet <span class="required">*</span></label>
+                  <div class="input-wrap">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="nom" name="nom" placeholder="Jean Dupont" required
+                           minlength="2" maxlength="100" autocomplete="name">
+                  </div>
+                  <span class="field-error" id="nom-error"></span>
                 </div>
-            </div>
-            <div class="photo">
-            <img id="i1" src="picture/2.png" width="120px"/>
-            <img  id="i2" src="picture/Logo maman.png" width="120px"/>
-            <img  id="i3" src="picture/4.png" width="120px"/>
-            <img   id="i4" src="picture/3.png" width="120px"/>
-            <img  id="i5" src="picture/2.png" width="120px"/>
-            <img   id="i6" src="picture/Logo maman.png" width="120px"/>
-            </div>
-        </section>
-        <section id="contact">
-            <h3>VEILLEZ REMPLIR LE FORMULAIRE SUIVANT POUR FAIRE UNE RESERVATION</h3>
-                    <!--formulaire-->
-            <form action="traiter_reservation.php" method="POST"> 
-                <input type="text" name="nom" placeholder="Votre nom" required>  
-                <input type="email" name="email" placeholder="Votre adresse mail" required> 
-                <input type="date" name="date_naissance" placeholder="Votre date de naissance" required>
-                <input type="date" name="date_location" placeholder="Votre date de location" required>
-                <textarea name="message" placeholder="Veillez remplir les informations nécessaires" required></textarea>     
-                <button type="submit">Valider</button>  
+                <div class="form-group">
+                  <label for="email">Adresse e-mail <span class="required">*</span></label>
+                  <div class="input-wrap">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" name="email" placeholder="vous@exemple.com" required
+                           maxlength="150" autocomplete="email">
+                  </div>
+                  <span class="field-error" id="email-error"></span>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="date_location">Date de location <span class="required">*</span></label>
+                  <div class="input-wrap">
+                    <i class="fas fa-calendar-alt"></i>
+                    <input type="date" id="date_location" name="date_location" required>
+                  </div>
+                  <span class="field-error" id="date-error"></span>
+                </div>
+                <div class="form-group">
+                  <label for="type_event">Type d'événement</label>
+                  <div class="input-wrap">
+                    <i class="fas fa-glass-cheers"></i>
+                    <select id="type_event" name="type_event">
+                      <option value="">Choisir...</option>
+                      <option value="mariage">Mariage</option>
+                      <option value="anniversaire">Anniversaire</option>
+                      <option value="reception">Réception d'entreprise</option>
+                      <option value="diner">Dîner privé</option>
+                      <option value="autre">Autre</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="message">Informations complémentaires <span class="required">*</span></label>
+                <div class="input-wrap textarea-wrap">
+                  <i class="fas fa-comment-alt"></i>
+                  <textarea id="message" name="message" placeholder="Décrivez votre événement : nombre d'invités, collections souhaitées, lieu de livraison..." required minlength="20" maxlength="1000" rows="4"></textarea>
+                </div>
+                <span class="field-error" id="msg-error"></span>
+                <span class="char-count" id="char-count">0 / 1000</span>
+              </div>
+
+              <button type="submit" class="btn-submit">
+                <i class="fas fa-paper-plane"></i>
+                Envoyer la réservation
+              </button>
             </form>
+          </div>
+        </div>
+      </div>
+    </section>
 
-            <h3>NOUS VOUS REMERCIONS</h3>
-        </section>
-        
-        <section id="reseaux">
-        <div>
-                       <a href="https://www.facebook.com/" target="_blank">
-            <i class="fab fa-facebook fa-2x"></i>
-            </a> 
-        </div>
-        <div class="carte">
-            <a href="https://www.instagram.com/" target="_blank">
-            <i class="fab fa-instagram fa-2x"></i>
-            </a>
-        </div>
-        <div>
-            <a href="https://www.youtube.com/" target="_blank">
-            <i class="fab fa-youtube fa-2x"></i>
-            </a>
-        </div>
-        </section>
+  </main>
 
-        <footer>JED53 tout droits réservés 2025</footer>
-   </main> 
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo">
+          <span class="logo-mc">MC</span>
+          <div class="logo-text">
+            <span class="logo-main">Mano's Clutlery</span>
+            <span class="logo-sub">Location de Couverts</span>
+          </div>
+        </div>
+        <p>Des couverts d'exception pour des moments mémorables.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="apropos.html">Catalogue</a></li>
+          <li><a href="#contact">Réservation</a></li>
+        </ul>
+      </div>
+      <div class="footer-social">
+        <h4>Nous suivre</h4>
+        <div class="social-icons">
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Mano's Clutlery — Tous droits réservés</p>
+    </div>
+  </footer>
+
+  <script>
+    // Sticky header
+    window.addEventListener('scroll', () => {
+      document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
+    });
+    // Mobile menu
+    document.getElementById('hamburger').addEventListener('click', function() {
+      document.querySelector('nav').classList.toggle('open');
+      this.classList.toggle('active');
+    });
+    // Filter tabs
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const filter = this.dataset.filter;
+        document.querySelectorAll('.catalog-card').forEach(card => {
+          card.style.display = (filter === 'all' || card.dataset.cat === filter) ? '' : 'none';
+        });
+      });
+    });
+    // Textarea char count
+    const msg = document.getElementById('message');
+    const cc = document.getElementById('char-count');
+    if (msg) msg.addEventListener('input', () => { cc.textContent = msg.value.length + ' / 1000'; });
+    // Set min date to today
+    const dateInput = document.getElementById('date_location');
+    if (dateInput) dateInput.min = new Date().toISOString().split('T')[0];
+    // Client-side validation
+    const form = document.getElementById('reservation-form');
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        let valid = true;
+        // Nom
+        const nom = document.getElementById('nom');
+        const nomErr = document.getElementById('nom-error');
+        if (!nom.value.trim() || nom.value.trim().length < 2) {
+          nomErr.textContent = 'Veuillez entrer votre nom complet.';
+          nom.classList.add('error');
+          valid = false;
+        } else { nomErr.textContent = ''; nom.classList.remove('error'); }
+        // Email
+        const email = document.getElementById('email');
+        const emailErr = document.getElementById('email-error');
+        const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailReg.test(email.value.trim())) {
+          emailErr.textContent = 'Adresse e-mail invalide.';
+          email.classList.add('error');
+          valid = false;
+        } else { emailErr.textContent = ''; email.classList.remove('error'); }
+        // Date
+        const date = document.getElementById('date_location');
+        const dateErr = document.getElementById('date-error');
+        if (!date.value) {
+          dateErr.textContent = 'Veuillez choisir une date.';
+          date.classList.add('error');
+          valid = false;
+        } else { dateErr.textContent = ''; date.classList.remove('error'); }
+        // Message
+        const message = document.getElementById('message');
+        const msgErr = document.getElementById('msg-error');
+        if (!message.value.trim() || message.value.trim().length < 20) {
+          msgErr.textContent = 'Merci de détailler votre demande (20 caractères minimum).';
+          message.classList.add('error');
+          valid = false;
+        } else { msgErr.textContent = ''; message.classList.remove('error'); }
+        if (!valid) e.preventDefault();
+      });
+    }
+    // Animate on scroll
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.catalog-card, .badge-item').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>

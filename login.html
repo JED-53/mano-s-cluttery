@@ -1,47 +1,137 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style-login.css">
-    <title>LOGIN</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Connexion — Mano's Clutlery">
+  <title>Connexion — Mano's Clutlery</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style-login.css">
 </head>
 <body>
-    <header>
-        <h1>MANO’S CLUTTERY</h1>
-    </header>
 
-    <main>
-         <div>
-        <img src="picture/3.png" width="120px"/>
+  <div class="page-split">
+
+    <!-- GAUCHE — Branding -->
+    <div class="split-brand">
+      <div class="brand-inner">
+        <a href="index.html" class="logo">
+          <span class="logo-mc">MC</span>
+          <div class="logo-text">
+            <span class="logo-main">Mano's Clutlery</span>
+            <span class="logo-sub">Location de Couverts</span>
+          </div>
+        </a>
+        <div class="brand-quote">
+          <blockquote>« Chaque table est une scène, chaque couvert est un acteur. »</blockquote>
+        </div>
+        <div class="brand-features">
+          <div class="feature-pill"><i class="fas fa-shield-alt"></i> Connexion sécurisée</div>
+          <div class="feature-pill"><i class="fas fa-lock"></i> Données protégées</div>
+        </div>
+      </div>
+      <div class="brand-decoration"></div>
     </div>
 
-    <div class="login-form">
-  <!-- Icône au-dessus -->
-  <i class="fas fa-user-circle login-icon"></i>
-  <h2>LOG IN</h2>
+    <!-- DROITE — Formulaire -->
+    <div class="split-form">
+      <div class="form-container">
 
-    <div class="input-container">
-        <i class="fas fa-user"></i>
-        <input type="text" placeholder="Nom d'utilisateur">
+        <div class="form-header">
+          <h1>Bon retour</h1>
+          <p>Connectez-vous à votre espace Mano's Clutlery</p>
+        </div>
+
+        <form id="login-form" action="login.php" method="POST" novalidate>
+          <!-- Token CSRF -->
+          <input type="hidden" name="csrf_token" value="">
+
+          <div class="form-group">
+            <label for="username">Identifiant</label>
+            <div class="input-wrap">
+              <i class="fas fa-user"></i>
+              <input type="text" id="username" name="username"
+                     placeholder="Nom d'utilisateur ou e-mail"
+                     autocomplete="username" required
+                     maxlength="150" spellcheck="false">
+            </div>
+            <span class="field-error" id="username-error"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <div class="input-wrap">
+              <i class="fas fa-lock"></i>
+              <input type="password" id="password" name="password"
+                     placeholder="Votre mot de passe"
+                     autocomplete="current-password" required
+                     minlength="8" maxlength="200">
+              <button type="button" class="toggle-pw" id="toggle-pw" aria-label="Afficher/masquer le mot de passe">
+                <i class="fas fa-eye" id="eye-icon"></i>
+              </button>
+            </div>
+            <span class="field-error" id="password-error"></span>
+          </div>
+
+          <div class="form-options">
+            <label class="checkbox-label">
+              <input type="checkbox" name="remember" id="remember">
+              <span class="checkbox-custom"></span>
+              Se souvenir de moi
+            </label>
+            <a href="reset-password.html" class="forgot-link">Mot de passe oublié ?</a>
+          </div>
+
+          <button type="submit" class="btn-login">
+            <span>Se connecter</span>
+            <i class="fas fa-arrow-right"></i>
+          </button>
+
+          <p class="register-link">
+            Pas encore de compte ? <a href="apropos.html#contact">Contactez-nous</a>
+          </p>
+        </form>
+
+      </div>
+      <a href="index.html" class="back-link">
+        <i class="fas fa-arrow-left"></i>
+        Retour au site
+      </a>
     </div>
 
-    <div class="input-container">
-        <i class="fas fa-lock"></i>
-        <input type="password" placeholder="Mot de passe">
-    </div>
+  </div>
 
-    <div class="options">
-        <label><input type="checkbox"> Se souvenir de moi</label>
-        <a href="#">Mot de passe oublié ?</a>
-    </div>
-
-        <button><a href="ma_page.html">connecter</a></button>
-
-    </div>
-
-       <footer>JED53 tout droits réservés 2025</footer>    
-    </main>
+  <script>
+    // Toggle password visibility
+    document.getElementById('toggle-pw').addEventListener('click', function() {
+      const pw = document.getElementById('password');
+      const icon = document.getElementById('eye-icon');
+      if (pw.type === 'password') {
+        pw.type = 'text';
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+      } else {
+        pw.type = 'password';
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+      }
+    });
+    // Validation client
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      let valid = true;
+      const user = document.getElementById('username');
+      const userErr = document.getElementById('username-error');
+      const pw = document.getElementById('password');
+      const pwErr = document.getElementById('password-error');
+      if (!user.value.trim()) {
+        userErr.textContent = 'Veuillez entrer votre identifiant.';
+        user.classList.add('error'); valid = false;
+      } else { userErr.textContent = ''; user.classList.remove('error'); }
+      if (!pw.value || pw.value.length < 8) {
+        pwErr.textContent = 'Le mot de passe doit contenir au moins 8 caractères.';
+        pw.classList.add('error'); valid = false;
+      } else { pwErr.textContent = ''; pw.classList.remove('error'); }
+      if (!valid) e.preventDefault();
+    });
+  </script>
 </body>
 </html>
